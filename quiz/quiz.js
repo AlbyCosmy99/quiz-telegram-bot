@@ -11,7 +11,6 @@ const NUMBER_OF_QUESTIONS = questions.length
 let index = 0
 
 bot.start((ctx) => {
-    console.log(questions)
     console.log('Preparing the quiz.')
     ctx.reply("\ud83c\udf40")
     ctx.reply('Welcome to my test! Good luck.')
