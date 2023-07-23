@@ -19,9 +19,10 @@ bot.hears('test', ctx => {
 })
 
 bot.start((ctx) => {
+    ctx.reply('Hi ' + ctx.message.from.first_name)
     bot.telegram.getUpdates().then(res => {
     })
-    console.log('Preparing the quiz.')
+    console.log('Preparing the quiz for: ' + ctx.message.chat.id)
     ctx.reply("\ud83c\udf40\n")
     let message ='Welcome to my test. Good luck!\nStart when you are ready.'
     
