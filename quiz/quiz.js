@@ -11,14 +11,43 @@ const bot =new Telegraf('5995490548:AAG_zcPMlc6sHxkIKYs-sEpKVZiqCyNYVcI')
 const NUMBER_OF_QUESTIONS = questions.length
 const TEST_PASSED_PERCENTAGE = 6/10
 
-let index = 0
+const MY_ID = 905720014
+let allowedAll = true
 
+let index = 0
 
 bot.hears('test', ctx => {
     ctx.reply('test eseguito con successo')
 })
 
+bot.command('disable', ctx => {
+    if(ctx && ctx.message && ctx.message.chat && ctx.message.chat.id !== MY_ID) {
+        ctx.reply("Non possiedi l'autorizzazione per l'utilizzo di questo comando.")
+        return
+    }
+    allowedAll = false
+    ctx.reply("Bot disabilitato per tutti gli utenti tranne l'admin (@AlbyCosmy99).")
+})
+
+bot.command('enable', ctx => {
+    if(ctx && ctx.message && ctx.message.chat && ctx.message.chat.id !== MY_ID) {
+        ctx.reply("Non possiedi l'autorizzazione per l'utilizzo di questo comando.")
+        return
+    }
+    allowedAll = true
+    ctx.reply("Bot abilitato per tutti gli utenti.")
+})
+
 bot.start((ctx) => {
+    if(!allowedAll && ctx && ctx.message && ctx.message.chat && ctx.message.chat.id !== MY_ID) {
+        ctx.reply("Attualmente non possiedi l'autorizzazione per utilizzare questo bot. Chiedi l'accesso ad Andrei (@AlbyCosmy99)")
+        return
+    }
+
+    setTimeout(function func() {
+        bot.telegram.sendMessage(905720014, 'tutto ok!!')
+    }, 1000)
+
     ctx.reply('Hi ' + ctx.message.from.first_name)
     bot.telegram.getUpdates().then(res => {
     })
