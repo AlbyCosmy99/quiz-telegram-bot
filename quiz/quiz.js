@@ -38,15 +38,26 @@ bot.command('enable', ctx => {
     ctx.reply("Bot abilitato per tutti gli utenti.")
 })
 
+bot.command('sorry', ctx => {
+    if(ctx && ctx.message && ctx.message.chat && ctx.message.chat.id !== MY_ID) {
+        ctx.reply("Non possiedi l'autorizzazione per l'utilizzo di questo comando.")
+        return
+    }
+    bot.telegram.sendMessage(ctx.chat.id, "Potrei averti inviato piu' di 3000 notifiche da questo bot. Se cosi' fosse "
+    + "ti chiedo scusa. Stavo testando le notifiche push e mi sono scordato che anche qualcun altro aveva "
+    + "avviato il bot con il proprio account. Ora l' ho disabilitato a tutti voi altri, quindi il problema"
+    + "non si ripresentera'.")
+})
+
 bot.start((ctx) => {
     if(!allowedAll && ctx && ctx.message && ctx.message.chat && ctx.message.chat.id !== MY_ID) {
         ctx.reply("Attualmente non possiedi l'autorizzazione per utilizzare questo bot. Chiedi l'accesso ad Andrei (@AlbyCosmy99)")
         return
     }
 
-    setTimeout(function func() {
-        bot.telegram.sendMessage(905720014, 'tutto ok!!')
-    }, 1000)
+    // setTimeout(function func() {
+    //     bot.telegram.sendMessage(905720014, 'tutto ok!!')
+    // }, 1000)
 
     ctx.reply('Hi ' + ctx.message.from.first_name)
     bot.telegram.getUpdates().then(res => {
