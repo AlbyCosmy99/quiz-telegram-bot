@@ -2,5 +2,11 @@
   "dependencies": {
     "telegraf": "^4.12.2"
   },
-  "type": "module"
+  "type": "module",
+  "name": "quiztelegrambot",
+  "version": "1.0.0",
+  "main": "quiz/quiz.js",
+  "scripts": {
+    "start": "node quiz/quiz.js"
+  }
 }
