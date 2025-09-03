@@ -13,7 +13,6 @@ const TEST_PASSED_PERCENTAGE = 6/10
 
 let index = 0
 
-
 bot.hears('test', ctx => {
     ctx.reply('test eseguito con successo')
 })
