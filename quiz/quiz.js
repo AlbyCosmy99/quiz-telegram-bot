@@ -1,4 +1,7 @@
-import {questions} from '../questions/questions.js'
+import dotenv from 'dotenv';
+dotenv.config();
+
+import { questions } from '../questions/questions.js'
 import { Telegraf } from 'telegraf'
 
 let points = 0;
@@ -6,10 +9,10 @@ let points = 0;
 let shuffledQuestions = []
 let quizOnGoing = false;
 
-const bot =new Telegraf('5995490548:AAG_zcPMlc6sHxkIKYs-sEpKVZiqCyNYVcI')
+const bot = new Telegraf(process.env.TELEGRAM_KEY)
 
 const NUMBER_OF_QUESTIONS = questions.length
-const TEST_PASSED_PERCENTAGE = 6/10
+const TEST_PASSED_PERCENTAGE = 6 / 10
 
 let index = 0
 
@@ -22,14 +25,14 @@ bot.start((ctx) => {
     })
     console.log('Preparing the quiz.')
     ctx.reply("\ud83c\udf40\n")
-    let message ='Welcome to my test. Good luck!\nStart when you are ready.'
-    
+    let message = 'Welcome to my test. Good luck!\nStart when you are ready.'
+
     bot.telegram.sendMessage(ctx.chat.id, message, {
         reply_markup: {
             inline_keyboard: [
                 [
                     {
-                        text:'Start',
+                        text: 'Start',
                         callback_data: 'start'
                     }
                 ]
@@ -45,11 +48,11 @@ bot.action('start', ctx => {
 })
 
 function nextQuestion(ctx) {
-    if(quizOnGoing) {
-        if(index < NUMBER_OF_QUESTIONS) {
+    if (quizOnGoing) {
+        if (index < NUMBER_OF_QUESTIONS) {
             let message = shuffledQuestions[index].question + ' (question ' + (index + 1) + '/' + NUMBER_OF_QUESTIONS + ')'
             let answers = []
-    
+
             let incorrectAnswers = shuffledQuestions[index].incorrect_answers
             let correctAnswer = [shuffledQuestions[index].correct_answer]
             let answersStrings = incorrectAnswers.concat(correctAnswer)
@@ -57,19 +60,19 @@ function nextQuestion(ctx) {
 
             let numAnswers = answersStrings.length
 
-            for(const answerString of answersStrings) {
+            for (const answerString of answersStrings) {
                 answers.push([
                     {
                         text: answerString,
                         callback_data: answerString
                     }
                 ])
-    
-                bot.action(answerString, ctx => {  
-                    if(quizOnGoing) {
-                        if(answerString === shuffledQuestions[index].correct_answer) {
+
+                bot.action(answerString, ctx => {
+                    if (quizOnGoing) {
+                        if (answerString === shuffledQuestions[index].correct_answer) {
                             points++
-                        } 
+                        }
                         index++;
                         nextQuestion(ctx)
                     }
@@ -77,7 +80,7 @@ function nextQuestion(ctx) {
             }
 
             let keyboard = []
-            for(let i = 0; i <numAnswers; i++) {
+            for (let i = 0; i < numAnswers; i++) {
                 keyboard.push(answers[i])
             }
 
@@ -93,13 +96,13 @@ function nextQuestion(ctx) {
         }
     }
 }
-  
+
 function showResults(ctx) {
-    ctx.reply('Points: ' + points +'\n')
+    ctx.reply('Points: ' + points + '\n')
 
     let message;
 
-    if ((points/NUMBER_OF_QUESTIONS) >= TEST_PASSED_PERCENTAGE) {
+    if ((points / NUMBER_OF_QUESTIONS) >= TEST_PASSED_PERCENTAGE) {
         ctx.reply('\ud83d\udc4f')
         message = 'You passed the test. Congratulations!'
 
@@ -108,13 +111,13 @@ function showResults(ctx) {
                 inline_keyboard: [
                     [
                         {
-                            text:'Celebrate!',
+                            text: 'Celebrate!',
                             callback_data: 'celebrate'
                         }
                     ],
                     [
                         {
-                            text:'Try again',
+                            text: 'Try again',
                             callback_data: 'start'
                         }
                     ]
@@ -130,16 +133,16 @@ function showResults(ctx) {
                 inline_keyboard: [
                     [
                         {
-                            text:'Try again.',
+                            text: 'Try again.',
                             callback_data: 'start'
                         }
                     ]
                 ]
             }
         });
-        
+
     }
-    
+
     quizOnGoing = false
 }
 
