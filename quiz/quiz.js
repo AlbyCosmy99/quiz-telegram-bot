@@ -1,8 +1,7 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
 import { questions } from '../questions/questions.js'
 import { Telegraf } from 'telegraf'
+import dotenv from 'dotenv';
+dotenv.config();
 
 let points = 0;
 
@@ -160,4 +159,4 @@ bot.action('celebrate', ctx => {
     ctx.reply('\ud83c\udf89')
 })
 
-bot.launch()
+export default bot
