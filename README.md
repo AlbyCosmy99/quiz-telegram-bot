@@ -1,6 +1,6 @@
 # 🤖 Quiz Telegram Bot  
 
-A simple **Telegram bot** built with **Node.js** that runs a **10-question multiple-choice quiz**.  
+A simple **Telegram bot** built with **Node.js** that runs a **10-questions multiple-choice quiz**.  
 This project was developed as a practice exercise for learning Telegram bot development using the [Telegraf](https://telegraf.js.org/) framework.  
 
 Play [here](https://t.me/Quiz1AlbyCosmy99Bot)
